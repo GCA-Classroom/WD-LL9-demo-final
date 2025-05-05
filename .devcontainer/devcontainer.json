@@ -1,0 +1,21 @@
+{
+    "name": "Skullcapz Dev Shop - LL9",
+    "features": {},
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ritwickdey.LiveServer", // Adds the Live Server extension
+          "ms-vsliveshare.vsliveshare" // Adds the Live Share extension
+        ]
+      }
+    },
+    "forwardPorts": [5500],
+    "portsAttributes": {
+      "5500": {
+        "label": "Live Server",
+        "onAutoForward": "openBrowser"
+      }
+    },
+    "postCreateCommand": "echo 'Welcome to Skullcapz Dev Shop – LL9 Codespace!'"
+  }
+  
