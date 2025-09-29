@@ -9,12 +9,34 @@ const songs = [
   "Shadow Over the Stage",
   "Encore: Lights Out"
 ];
-
+/* Original shuffle below
+ function generateSetlist() {
+   const shuffledSongs = songs.sort(() => Math.random() - 0.5);
+   document.getElementById("setlist").innerHTML =
+   shuffledSongs.map(song => `<li>${song}</li>`).join('');
+// } */ 
 function generateSetlist() {
-  const shuffledSongs = songs.sort(() => Math.random() - 0.5);
-  document.getElementById("setlist").innerHTML =
-    shuffledSongs.map(song => `<li>${song}</li>`).join('');
+  // Make a copy of the songs array so we don’t modify the original
+  const shuffled = [...songs];
+
+  // Fisher–Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  // Select the UL element in the DOM
+  const ul = document.getElementById('setlist');
+  ul.innerHTML = ''; // Clear any existing list items
+
+  // Loop through shuffled songs and append each as an <li>
+  for (const song of shuffled) {
+    const li = document.createElement('li');
+    li.textContent = song;
+    ul.appendChild(li);
+  }
 }
+
 
 document.getElementById("generateSetlist").addEventListener("click", generateSetlist);
 
