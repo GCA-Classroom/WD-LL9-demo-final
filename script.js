@@ -9,11 +9,53 @@ const songs = [
   "Shadow Over the Stage",
   "Encore: Lights Out"
 ];
-
+/* Original function 
 function generateSetlist() {
   const shuffledSongs = songs.sort(() => Math.random() - 0.5);
   document.getElementById("setlist").innerHTML =
     shuffledSongs.map(song => `<li>${song}</li>`).join('');
+}
+*/
+// FUNCTION WITH CONDITIONAL STYLING
+function generateSetlist() {
+  // Make a copy of the songs array so we don’t modify the original
+  const shuffled = [...songs];
+
+  // Fisher–Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  // Select the UL element in the DOM
+  const ul = document.getElementById('setlist');
+  ul.innerHTML = ''; // Clear any existing list items
+
+  // Loop through shuffled songs and append each as an <li>
+  for (let index = 0; index < shuffled.length; index++) {
+    const song = shuffled[index];
+    const li = document.createElement('li');
+    li.textContent = song;
+
+    // ✅ Conditional styling
+    // If the song title contains "Remix"
+    if (song.toLowerCase().includes('remix')) {
+      li.style.color = 'purple';
+      li.style.fontWeight = 'bold';
+    }
+
+    // If it’s the first song in the list
+    if (index === 0) {
+      li.style.backgroundColor = 'lightgreen';
+    }
+
+    // If it’s the last song in the list
+    if (index === shuffled.length - 1) {
+      li.style.backgroundColor = 'lightblue';
+    }
+
+    ul.appendChild(li);
+  }
 }
 
 document.getElementById("generateSetlist").addEventListener("click", generateSetlist);
